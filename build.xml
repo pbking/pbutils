@@ -1,0 +1,34 @@
+<project name='pbcommands' default='build' basedir='.'>
+	
+	<!-- user build properties -->
+	<property file="build.properties"/>
+	
+	<!-- flex properties -->
+	<taskdef resource="flexTasks.tasks" classpath="${FLEX_HOME}/ant/lib/flexTasks.jar" />
+	<property name="APP_ROOT" value="${basedir}"/>
+	<property name="FLEX_FRAMEWORKS" value="${FLEX_HOME}/frameworks"/>
+	<property name="FLEX_CONFIG" value="${FLEX_HOME}/frameworks/flex-config.xml" />
+	<property name="ASDOC" value="${FLEX_HOME}/bin/asdoc"/>
+	
+	<!-- project properties -->
+	<property name="build" value="${basedir}/target" />
+	<property name="src" value="${basedir}/src" />
+	
+	<tstamp><format property="TODAY_FORMAT" pattern="MM-dd-yyyy_hh-mm"/></tstamp>
+	<property name="publishDate" value="[${TODAY_FORMAT}]" />
+	
+	<!-- BUILD -->
+	<target name='build'>
+
+		<echo message="Building ${ant.project.name}"/>
+
+		<compc output="${build}/${ant.project.name}.swc">
+			<source-path path-element="${src}" />
+			<include-sources dir="${src}" includes="*"/>
+			<compiler.external-library-path file="${PBLOGGER_SWC}" append="true"/>
+		</compc>			
+	</target>
+
+</project>
+
+
