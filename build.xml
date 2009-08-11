@@ -11,7 +11,7 @@
 	<property name="ASDOC" value="${FLEX_HOME}/bin/asdoc"/>
 	
 	<!-- project properties -->
-	<property name="build" value="${basedir}/target" />
+	<property name="build" value="${basedir}/build" />
 	<property name="src" value="${basedir}/src" />
 	
 	<tstamp><format property="TODAY_FORMAT" pattern="MM-dd-yyyy_hh-mm"/></tstamp>
