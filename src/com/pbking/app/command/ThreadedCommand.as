@@ -8,6 +8,25 @@ package com.pbking.app.command
 	import flash.events.ProgressEvent;
 	import flash.utils.getTimer;
 
+	/**
+	 * This threaded command is based on the Ender framework.  Is is only PSUDO-threaded.
+	 * Your logic should happen in interations and you classes should handle all of the
+	 * information that should be persisted across the iterations.
+	 * 
+	 * The class does have some promitive optimization logic that will help set the 
+	 * number of iterations that happen on each run.
+	 * 
+	 * Unlike the rest of the commands your execution logic should be placed in an
+	 * overridden handleRun() method.  In this method should be the logic for ONE iteration.
+	 * When your iteration is complete call the yield() method to return control to the
+	 * flash player (to allow screen updates, etc).  When yeld is called you can optionall
+	 * pass a percentComplete value (if you know).  A progressEvent will be dispatched
+	 * from this event every time yield is called.
+	 * 
+	 * It's kinda tricky to use this command so a good example is needed.  Using this command
+	 * WILL lengthen the total amount of time it takes to process something.  But allowing
+	 * the Flash player to continue processing is necessary during long calculations & parsings.
+	 */
 	public class ThreadedCommand extends AsyncCommand implements IThread, IRunnable
 	{
 		// VARIABLES //////////
@@ -78,12 +97,9 @@ package com.pbking.app.command
 			{
 				runLength = getTimer() - runStartTime;
 
-				trace(this + ": " + iterationsPerRun + ": " + runLength);
-				
 				if(Math.abs(runLength - optimalRunLength) > optimizationAccuracy)
 				{
 					iterationsPerRun = optimalRunLength*iterationsPerRun/runLength;
-					trace(" ::" + iterationsPerRun);
 				}
 			}
 			

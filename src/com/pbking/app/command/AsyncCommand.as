@@ -10,7 +10,8 @@ package com.pbking.app.command
 	 *  
 	 * The special callback() event passes the <b>Command Instance</b> to the target method
 	 * instead of the actual EVENT that is dispatched when COMPLETE is triggered. This
-	 * listener is AUTOMATICALLY removed once the command has completed.
+	 * listener is AUTOMATICALLY removed once the command has completed.  If you want to listen
+	 * for more than ONE result then you should add an event listener for the Event.COMPLETE event.
 	 * 
 	 * Usage:
 	 * <code>
@@ -24,7 +25,10 @@ package com.pbking.app.command
 	 * function onCommandComplete(c:ExtendedAsyncCommand):void
 	 * {
 	 *  //no need to remove listeners, type the event.target, etc
-	 *  trace(c.someCustomResultProp);
+	 *  if(c.success)
+	 *  {
+	 *   logger.debug(c.someCustomResultProp);
+	 *  }
 	 * }
 	 * </code>
 	 * 

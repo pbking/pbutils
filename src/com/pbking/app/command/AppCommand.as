@@ -5,14 +5,39 @@ package com.pbking.app.command
 	import flash.events.EventDispatcher;
 
 	/**
-	 * This is the BASE command for applications
+	 * This is the BASE class commands
 	 * 
 	 * Call the public method "execute()" to trigger the command's logic.  This logic
-	 * should be contained in the internal handleExecution() method.  Keep in mind that
-	 * unless you pass TRUE to this class' constructor the command logic WILL NOT 
-	 * AUTOMATICALLY TRIGGER.
+	 * must be contained in an overridden handleExecution() method.
 	 * 
-	 * These command can be instantiated using MXML.
+	 * Keep in mind that unless you pass TRUE to this class' constructor the command 
+	 * logic WILL NOT AUTOMATICALLY TRIGGER and you must call .execute().  Calling
+	 * execute is standard procedure.
+	 * 
+	 * All commands extend from this command.  It is a syncrynous command.  
+	 * 
+	 * If you want your command to be undoable then you must set the _undoable property
+	 * to true (usually in your constructor) and handle all of your undo logic yourself.
+	 * Undoable commands are tracked by this class.  You can get a list of commands
+	 * that can be undone or simply undo the last undoable command.  The maximum undoable
+	 * history default to 100 commands.  That can be changed.
+	 * 
+	 * The command framework uses the PBLogger logging framework for all logging.  The
+	 * default cagetory for all commands is 'pbking.command'.  You can change that 
+	 * default value and ALL commands built with this framework will default to your
+	 * new default.
+	 * 
+	 * These commands can be instantiated using MXML.  Keep in mind that if you wish to
+	 * do so that the prameters in the constructor must default to something (often null)
+	 * and all of the props you operate on need to be public.
+	 * 
+	 * Usage:
+	 * <code>
+	 * var c:MyCommand = new MyCommand();
+	 * c.someProp = "banana";
+	 * c.execute();
+	 * logger.debug(c.bakingResult);
+	 * </code>
 	 * 
 	 * @param	executeImmediately	TRUE if you want the command logic to execute immediately.
 	 * 								The default is FALSE
@@ -22,6 +47,8 @@ package com.pbking.app.command
 	public class AppCommand extends EventDispatcher
 	{
 		// VARIABLES /////////////
+		
+		include "../../../../version.as"
 		
 		protected var logger:PBLogger;
 		protected var executeImmediately:Boolean;
