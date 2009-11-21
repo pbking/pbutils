@@ -1,7 +1,5 @@
 package com.pbking.app.command
 {
-	import flash.events.Event;
-	
 	/**
 	 * A Composite command allows for the collection of commands (including ServiceCommands
 	 * and even other CompositeCommands) either in serial or parallel.
@@ -20,6 +18,12 @@ package com.pbking.app.command
 		public var failImmediatelyOnError:Boolean = false;
 		public var concurrant:Boolean;
 		protected var commands:Array = [];
+		
+		protected var _errorMessage:String;
+		public function get errorMessage():String { return _errorMessage; }
+
+		protected var _errorCount:int;
+		public function get errorCount():int { return _errorCount; }
 		
 		// CONSTRUCTION //////////
 		
@@ -63,15 +67,27 @@ package com.pbking.app.command
 		 */
 		protected function onCommandComplete(command:AsyncCommand):void
 		{
-			if(failImmediatelyOnError && !command.success)
+			if(!command.success)
 			{
-				this.success = false;
-				onComplete();
+				_success = false;
+				_errorCount++;
+				
+				if(command.hasOwnProperty("errorMessage"))
+				{
+					if(_errorMessage == null)
+						_errorMessage = "";
+						
+					_errorMessage += command['errorMessage'];
+				}
+				
+				if(failImmediatelyOnError)
+				{
+					onComplete();
+					return;
+				}
 			}
-			else
-			{
-				executeNextCommand();
-			}
+
+			executeNextCommand();
 		}
 		
 		/**

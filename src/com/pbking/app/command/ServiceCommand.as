@@ -15,6 +15,8 @@ package com.pbking.app.command
 	 * 
 	 * The error message is generated from the fault and placed in the commands read-only property errorMessage.
 	 * 
+	 * A .success property is added to show the success of the service call.
+	 * 
 	 * This command also adds the ability to 'pretend' to call a service.  This is usefull
 	 * during development for constructing commands that rely on hard-coded mock data 
 	 * that operate async before your services are in place.

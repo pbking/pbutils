@@ -9,37 +9,18 @@
 	<property name="flexlibs" value="${FLEX_HOME}/frameworks/libs" />
 	
 	<!-- project properties -->
-	<property name="build" value="${basedir}/build" />
 	<property name="src" value="${basedir}/src" />
-	<property name="doc" value="${build}/doc" />
+	<property name="doc" value="${BUILD_DIRECTORY}/doc" />
 	
 	<!-- version properties -->
-	<property file=".version" />
-	<exec outputproperty="build_num" executable="svnversion" dir="${src}" />
 	<tstamp><format property="today_format" pattern="MM-dd-yyyy_hh-mm"/></tstamp>
 	<property name="publish_date" value="[${today_format}]" />
-	<property name="version" value="${MAJOR_VERSION}.${REVISION}.${build_num}" />
+	<property name="version" value="1.1" />
 	
-	<!-- VERSION -->
-	<target name="version">
-		<replace 
-			file="${src}/version.as" 
-			token="[DEV_BUILD]" 
-			value="${version}" />		
-	</target>
-	<target name="unversion">
-		<replace 
-			file="${src}/version.as" 
-			token="${version}" 
-			value="[DEV_BUILD]" />		
-	</target>
-
 	<!-- DOCUMENT -->
 	<target name='document'>
 		
 		<echo message="Documenting ${ant.project.name}"/>
-		
-		<antcall target="version"/>
 		
 		<exec executable="${ASDOC}" failonerror="true">
 			<arg line="-main-title '${ant.project.name} Documentation version ${version}'" />
@@ -51,8 +32,6 @@
 			<arg line="-output '${doc}'" />
 		</exec>
 		
-		<antcall target="unversion"/>
-		
 	</target>
 
 	<!-- BUILD -->
@@ -60,15 +39,11 @@
 
 		<echo message="Building ${ant.project.name}"/>
 
-		<antcall target="version"/>
-
-		<compc output="${build}/${ant.project.name}.swc">
+		<compc output="${BUILD_DIRECTORY}/${version}/${ant.project.name}-${version}.swc">
 			<source-path path-element="${src}" />
 			<include-sources dir="${src}/com" includes="*"/>
 			<compiler.library-path file="${PBLOGGER_SWC}" append="true"/>
 		</compc>			
-
-		<antcall target="unversion"/>
 		
 </target>
 

@@ -115,6 +115,7 @@ package com.ender.threads
 			var count:int = 0;
 			
 			for each (var i:* in allThreads) {
+				i;
 				count++;
 			}
 			

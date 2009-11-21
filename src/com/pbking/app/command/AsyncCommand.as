@@ -107,7 +107,11 @@ package com.pbking.app.command
 			{
 				if (lo.type == CALLBACK)
 				{
-					lo.listener(this);
+					try {
+						lo.listener(this);
+					} catch (e:Error) {
+						lo.listener();
+					}
 					this.removeEventListener(lo.type, lo.listener, lo.useCapture);
 				} 
 			}

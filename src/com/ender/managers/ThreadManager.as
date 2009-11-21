@@ -190,8 +190,6 @@ package com.ender.managers
 		 * Event handler for the thread ticker.
 		 */ 
 		protected function onThreadTick(event:Event):void {
-			var timeInMillis:uint = getTimer();
-			
 			for each (var iThreadSchedule:ThreadSchedule in _threadSchedules) {
 				var timeDelta:uint = getTimer() - _lastTime;
 

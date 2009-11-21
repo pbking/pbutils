@@ -77,7 +77,7 @@ package com.ender.threads
 		 * the higher the priority. See Thread constants for declared values.
 		 */
 		public function get priority():int {
-			return _priority
+			return _priority;
 		}
 
 		public function set priority(value:int):void {

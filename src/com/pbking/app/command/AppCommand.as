@@ -48,8 +48,6 @@ package com.pbking.app.command
 	{
 		// VARIABLES /////////////
 		
-		include "../../../../version.as"
-		
 		protected var logger:PBLogger;
 		protected var executeImmediately:Boolean;
 		

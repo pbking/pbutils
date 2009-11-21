@@ -33,6 +33,7 @@ package com.pbking.app.command
 		
 		protected var _priority:int = Thread.HIGH_PRIORITY;
 		
+		public var minimumIterationsPerRun:int = 1;
 		public var iterationsPerRun:int = 1000;
 		public var autoOptimizeIterations:Boolean = true;
 		
@@ -46,7 +47,7 @@ package com.pbking.app.command
 
 		// GETTERS and SETTERS //////////
 		
-		public function get priority():int { return _priority }
+		public function get priority():int { return _priority; }
 		public function set priority(value:int):void { _priority = value; }
 		
 		public function get runnable():IRunnable { return this; }
@@ -100,6 +101,8 @@ package com.pbking.app.command
 				if(Math.abs(runLength - optimalRunLength) > optimizationAccuracy)
 				{
 					iterationsPerRun = optimalRunLength*iterationsPerRun/runLength;
+					if(iterationsPerRun < minimumIterationsPerRun)
+						iterationsPerRun = minimumIterationsPerRun;
 				}
 			}
 			
